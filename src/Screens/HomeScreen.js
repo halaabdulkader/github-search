@@ -1,4 +1,4 @@
-import {Fragment, useState, useEffect} from 'react'
+import {Fragment, useState} from 'react'
 import Header from './../Base/Header'
 import SearchUser from './../Search/SearchUser'
 

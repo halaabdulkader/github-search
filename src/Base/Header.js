@@ -1,21 +1,26 @@
 import {useState} from 'react';
 import axios from 'axios'
-import {Navbar, Nav,Form, FormControl, Button, InputGroup} from 'react-bootstrap'
+import {Navbar, Nav,Form, FormControl, Button} from 'react-bootstrap'
 
 
-const Header = ({handleUsersChange, handleLoadingChange}) => {
-  const [userName, setUserName] = useState('')
+const Header = ({handleStateChange, handleLoadingChange}) => {
+  const [repoQuery, setRepoQuery] = useState('')
 
   const handleClick = (event) => {
       event.preventDefault()
       const getUser = async () => {
         try {
-          const response = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.github.com/users/${userName}`)
+          const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.github.com/search/repositories', {
+            params: {
+              q: repoQuery
+            }
+          })
           
           if (response.status === 200) {
-            handleUsersChange(response)
+            console.log(response);
+            handleStateChange(response)
             handleLoadingChange()
-            setUserName('')
+            setRepoQuery('')
           }
         } catch (error) {
           console.error(error)
@@ -27,26 +32,20 @@ const Header = ({handleUsersChange, handleLoadingChange}) => {
   return (
     <>
     <Navbar bg="dark" variant="dark">
-      <Navbar.Brand href="#home">DIGIEGGS</Navbar.Brand>
-      <Nav className="mr-auto">
-      <InputGroup>
-      <InputGroup.Prepend>
-        <InputGroup.Text id="btnGroupAddon">@</InputGroup.Text>
-      </InputGroup.Prepend>
-      <FormControl
-        type="text"
-        placeholder="Search"
-        aria-label="Input group example"
-        aria-describedby="btnGroupAddon"
-      />
-    </InputGroup>
+      <Navbar.Brand href="#">DIGIEGGS</Navbar.Brand>
       <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" value={userName} onChange={(e)=>{setUserName(e.target.value)}}/>
+        <FormControl type="text" placeholder="Search" className="mr-sm-2" value={repoQuery} onChange={(e)=>{setRepoQuery(e.target.value)}}/>
         <Button variant="outline-info" onClick={handleClick}>Search</Button>
       </Form>
-        <Nav.Link href="#bookmarks">Bookmarks</Nav.Link>
+      <Nav className="ml-5">
+        <Nav.Link href="#home">
+          <i
+            className='far fa-bookmark mr-2'
+            style={{color: '#ffffff'}}
+          ></i>
+          Bookmarks
+        </Nav.Link>
       </Nav>
-      
     </Navbar>
   </>
   )

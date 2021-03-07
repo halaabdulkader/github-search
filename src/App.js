@@ -1,11 +1,11 @@
 import {Fragment} from 'react'
-import HomeScreen from './Screens/HomeScreen'
+import ListScreen from './Screens/ListScreen'
 
 const App = () => {
  
   return (
     <Fragment>
-        <HomeScreen />
+        <ListScreen />
     </Fragment>
   )
 } 
