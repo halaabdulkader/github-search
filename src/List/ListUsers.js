@@ -1,16 +1,16 @@
 import {Fragment} from 'react'
 import {ListGroup} from 'react-bootstrap'
 
-const ListRepos = ({repos, loading}) => {
+const ListUsers = ({users, loading}) => {
   return (
     <Fragment>
       {!loading &&
         <Fragment>
-          <h1>{repos.data.total_count} Repository Result</h1>
+          <h1>{users.data.total_count} User Result</h1>
           <ListGroup variant="flush">
-            {repos.data.items.map(repo => (
-              <ListGroup.Item key={repo.id}>
-                {repo.name}
+            {users.data.items.map(user => (
+              <ListGroup.Item key={user.id}>
+                {user.login}
               </ListGroup.Item>
             ))}
           </ListGroup>
@@ -20,4 +20,4 @@ const ListRepos = ({repos, loading}) => {
   )
 }
 
-export default ListRepos
+export default ListUsers

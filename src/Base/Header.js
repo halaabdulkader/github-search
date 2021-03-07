@@ -2,31 +2,40 @@ import {useState} from 'react';
 import axios from 'axios'
 import {Navbar, Nav,Form, FormControl, Button} from 'react-bootstrap'
 
-
 const Header = ({handleStateChange, handleLoadingChange}) => {
-  const [repoQuery, setRepoQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const handleClick = (event) => {
-      event.preventDefault()
-      const getUser = async () => {
-        try {
-          const response = await axios.get('https://cors-anywhere.herokuapp.com/https://api.github.com/search/repositories', {
-            params: {
-              q: repoQuery
-            }
+    console.log('clicked');
+    event.preventDefault()
+    
+    const getData = async () => {
+      try {
+        const [reposResponse, usersResponse] = await Promise.all([
+          axios.get('https://cors-anywhere.herokuapp.com/https://api.github.com/search/repositories', {
+              params: {
+                q: searchQuery
+              }
+          }),
+          axios.get('https://cors-anywhere.herokuapp.com/https://api.github.com/search/users', {
+              params: {
+                q: searchQuery
+              }
           })
-          
-          if (response.status === 200) {
-            console.log(response);
-            handleStateChange(response)
-            handleLoadingChange()
-            setRepoQuery('')
-          }
-        } catch (error) {
-          console.error(error)
+        ])
+        
+        if (reposResponse.status === 200 && usersResponse.status === 200) {
+          console.log(reposResponse, usersResponse);
+          handleStateChange(reposResponse, usersResponse)
+          handleLoadingChange()
+          setSearchQuery('')
+
         }
+      } catch (error) {
+        console.error(error)
       }
-      getUser()
+    }
+    getData()
   }
 
   return (
@@ -34,7 +43,7 @@ const Header = ({handleStateChange, handleLoadingChange}) => {
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand href="#">DIGIEGGS</Navbar.Brand>
       <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" value={repoQuery} onChange={(e)=>{setRepoQuery(e.target.value)}}/>
+        <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searchQuery} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
         <Button variant="outline-info" onClick={handleClick}>Search</Button>
       </Form>
       <Nav className="ml-5">
