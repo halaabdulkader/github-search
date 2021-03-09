@@ -45,9 +45,6 @@ const Sidebar = ({reposCount, usersCount}) => {
               <Col>
                   <h6>Bookmarked</h6>
               </Col>
-              <Col>
-                <h6>{12}</h6>
-              </Col>
             </Row>
           </NavLink>  
         </ListGroup.Item>

@@ -5,9 +5,7 @@ const BookmarkIcon = (props) => {
 
   useEffect(() => {
     const repos = JSON.parse( localStorage.getItem('bookmarks')) || {}
-    const found = repos.find((repo) => {
-      return repo.id === props.repo.id
-    })
+    const found = repos[props.repo.id]
 
     if(found) {
       setBookmarked(true)
@@ -19,6 +17,12 @@ const BookmarkIcon = (props) => {
     const repos = JSON.parse( localStorage.getItem('bookmarks'))
 
     if(bookmarked) {
+      delete repos[props.repo.id]
+      localStorage.setItem('bookmarks', JSON.stringify(repos))
+      alert('Repository Removed')
+    }
+    
+    else {
       if(repos) {
         repos[props.repo.id] = props.repo
         localStorage.setItem('bookmarks', JSON.stringify(repos))
@@ -30,11 +34,7 @@ const BookmarkIcon = (props) => {
         repos[props.repo.id] = props.repo
       }
       
-      alert('Repository Bookmarked')
-    }
-
-    else {
-      
+      alert('Repository Bookmarked')    
     }
 
 

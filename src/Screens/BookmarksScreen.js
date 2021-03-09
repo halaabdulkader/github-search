@@ -9,9 +9,14 @@ const BookmarksScreen = () => {
     const storageRepos = JSON.parse( localStorage.getItem('bookmarks'))
 
     if(storageRepos) {
-      setRepos(storageRepos)
-    }
+      let reposList = []
 
+      for (let repo in storageRepos) {
+        reposList.push(storageRepos[repo])
+      }
+      
+      setRepos(reposList)
+    }
   }, [])
   return (
     <Fragment>

@@ -49,7 +49,7 @@ const ListScreen = () => {
                 {!loading && <Sidebar reposCount={repos.data.total_count} usersCount={users.data.total_count} />}
               </Col>
               <Col xl={9} md={7} sm={6} xs={0}>
-                <ListBookmarks />
+                <ListBookmarks repos={repos} />
               </Col>
             </Route>
             <Route>
