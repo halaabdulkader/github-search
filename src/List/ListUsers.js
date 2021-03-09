@@ -10,7 +10,8 @@ const ListUsers = ({users, loading}) => {
           <ListGroup variant="flush">
             {users.data.items.map(user => (
               <ListGroup.Item key={user.id}>
-                {user.login}
+                <img src={user.avatar_url} width='25px' style={{borderRadius: '50%', marginRight: '5px'}}/>
+                <a href={user.html_url}>{user.login}</a>
               </ListGroup.Item>
             ))}
           </ListGroup>

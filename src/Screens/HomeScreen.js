@@ -1,23 +1,15 @@
-import {Fragment, useState} from 'react'
-import Header from './../Base/Header'
-import SearchUser from './../Search/SearchUser'
+import {Fragment} from 'react'
+import {Header} from './../Base'
+import {Container} from 'react-bootstrap'
 
 const HomeScreen = () => {
-  const [user, setUser] = useState({})
-  const [loading, setLoading] = useState(true)
-
-  const handleUserChange = (user) => {
-    setUser(user)
-  }
-
-  const handleLoadingChange = () => {
-    setLoading(false)
-  }
-
   return (
     <Fragment>
-      <Header handleUsersChange={handleUserChange} handleLoadingChange={handleLoadingChange} />
-      <SearchUser user={user} loading={loading} />
+      <Header />
+      <Container className='text-center mt-5'>
+        <i className="fas fa-search fa-5x"></i>
+        <h1>Welcome to Github Search</h1>
+      </Container>
     </Fragment>
   )
 }

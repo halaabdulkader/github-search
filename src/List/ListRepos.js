@@ -1,16 +1,18 @@
 import {Fragment} from 'react'
 import {ListGroup} from 'react-bootstrap'
+import {BookmarkIcon} from './../Base'
 
 const ListRepos = ({repos, loading}) => {
   return (
     <Fragment>
       {!loading &&
         <Fragment>
-          <h1>{repos.data.total_count} Repository Result</h1>
           <ListGroup variant="flush">
-            {repos.data.items.map(repo => (
+            {repos && repos.data.items.map(repo => (
               <ListGroup.Item key={repo.id}>
-                {repo.name}
+                <BookmarkIcon repo={repo} />
+                <a href={repo.html_url}>{repo.name}</a>
+                <p>{repo.description}</p>
               </ListGroup.Item>
             ))}
           </ListGroup>

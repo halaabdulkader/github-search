@@ -12,3 +12,20 @@ code {
     monospace;
 }
 
+.link {
+  color: #000000;
+  text-decoration: none;
+  display: flex;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.active {
+  color: #17a2b8;
+}
+
+#bookmark-icon:hover {
+  color: blue;
+}

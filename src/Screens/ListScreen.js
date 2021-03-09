@@ -1,16 +1,18 @@
 import {Fragment, useState} from 'react'
+import {Switch, Route} from 'react-router-dom'
 import {Container, Row, Col} from 'react-bootstrap'
-import {Header, Sidebar} from './../Base'
-import {ListRepos, ListUsers} from './../List'
+import SearchScreen from './SearchScreen'
+import {SearchHeader, Sidebar} from './../Base'
+import {ListRepos, ListUsers, ListBookmarks} from './../List'
 
 const ListScreen = () => {
-  const [repos, setRepos] = useState({})
-  const [users, setUsers] = useState({})
+  const [repos, setRepos] = useState(null)
+  const [users, setUsers] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const handleStateChange = (repoState, userstate) => {
+  const handleStateChange = (repoState, userState) => {
     setRepos(repoState)
-    setUsers(userstate)
+    setUsers(userState)
   }
 
   const handleLoadingChange = () => {
@@ -19,16 +21,43 @@ const ListScreen = () => {
 
   return (
     <Fragment>
-      <Header handleStateChange={handleStateChange} handleLoadingChange={handleLoadingChange} />
+      <SearchHeader handleStateChange={handleStateChange} handleLoadingChange={handleLoadingChange} />
       <Container fluid={true}>
         <Row>
-          <Col className='border-right border-bottom'>
-            {!loading && <Sidebar reposCount={repos.data.total_count} usersCount={users.data.total_count} />}
-          </Col>
-          <Col xs={9}>
-            {/* <ListRepos repos={repos} loading={loading} /> */}
-            <ListUsers users={users} loading={loading} />
-          </Col>
+          <Switch>
+            <Route exact path='/search'>
+              <SearchScreen />
+            </Route>
+            <Route exact path='/search/repositories'>
+              <Col className='border-right border-bottom'>
+                {!loading && <Sidebar reposCount={repos.data.total_count} usersCount={users.data.total_count} />}
+              </Col>
+              <Col xl={9} md={7} sm={6} xs={0}>
+                <ListRepos repos={repos} loading={loading} />
+              </Col>
+            </Route>
+            <Route exact path='/search/users'>
+              <Col className='border-right border-bottom'>
+                {!loading && <Sidebar reposCount={repos.data.total_count} usersCount={users.data.total_count} />}
+              </Col>
+              <Col xl={9} md={7} sm={6} xs={0}>
+                <ListUsers users={users} loading={loading} />
+              </Col>
+            </Route>
+            <Route exact path='/search/bookmarks'>
+              <Col className='border-right border-bottom'>
+                {!loading && <Sidebar reposCount={repos.data.total_count} usersCount={users.data.total_count} />}
+              </Col>
+              <Col xl={9} md={7} sm={6} xs={0}>
+                <ListBookmarks />
+              </Col>
+            </Route>
+            <Route>
+              <Container className='text-center mt-5'>
+                <h1>404 NOT FOUND</h1>
+              </Container>
+            </Route> 
+          </Switch>
         </Row>
       </Container>
     </Fragment>

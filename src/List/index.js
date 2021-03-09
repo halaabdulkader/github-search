@@ -1,4 +1,5 @@
 import ListRepos from './ListRepos'
 import ListUsers from './ListUsers'
+import ListBookmarks from './ListBookmarks'
 
-export {ListRepos, ListUsers}
+export {ListRepos, ListUsers, ListBookmarks}
